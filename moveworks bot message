@@ -33,11 +33,3 @@ var message =
                     
 return message;
 
-//expected result
-//A Walkup – Appointment (WUA0001080) is created for you at the Atlanta Walkup
-//Appointment time: 2025-10-15 09:00:00
-//Time Zone: US/Central 
-//Please review the calendar invite for more details.
-//To cancel the appointment,  click here  
-
-
