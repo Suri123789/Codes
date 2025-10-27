@@ -1,0 +1,43 @@
+/*
+**Access Flow/Action data using the fd_data object. Script must return a value. 
+**Order number is offset by +1 in Error Handling Section.
+**Available options display upon pressing "." after fd_data
+**example: var shortDesc = fd_data.trigger.current.short_description;
+**return shortDesc;
+*/
+
+var attachsys_id = fd_data._3__look_up_record.record.sys_id;
+var techbar = fd_data._2__update_record.record.wu_location_queue.name;
+var wunumber = fd_data.trigger.current.number;
+
+// Base URL
+var baseUrl = gs.getProperty('glide.servlet.uri') || '';
+var appointmentTime = fd_data._4__look_up_record.record.window_start;
+var attachLink = baseUrl + '/nav_to.do?uri=sys_attachment.do?sys_id=' + attachsys_id;
+var worknote = fd_data.trigger.current.window_start.getDisplayValue();
+
+//Cancel link
+
+var inst ='inspirebrandsdev';
+var sub = 'RE:'+fd_data._2__update_record.record.number+' Cancel Walk-up Appointment';
+var body = 'Please do not change the subject, just click send message.';
+
+
+// HTML message
+var message = 
+  'A Walkup – Appointment '+'('+wunumber+')'+' is created for you at the ' + techbar +'<br>'+
+  '<b>Appointment time:</b> ' + worknote +'<br>'+'<b>Time Zone:</b> '+'US/Central '+ '<br>' +
+  'Please review the <a href="' + attachLink + '">calendar invite</a> for more details.<br>'+
+  'To cancel the appointment, <a href="mailto:' + inst + '@service-now.com?SUBJECT=' + sub + '&amp;body=' + body + '"> click here</a> <br>'; 
+
+                    
+return message;
+
+//expected result
+//A Walkup – Appointment (WUA0001080) is created for you at the Atlanta Walkup
+//Appointment time: 2025-10-15 09:00:00
+//Time Zone: US/Central 
+//Please review the calendar invite for more details.
+//To cancel the appointment,  click here  
+
+
